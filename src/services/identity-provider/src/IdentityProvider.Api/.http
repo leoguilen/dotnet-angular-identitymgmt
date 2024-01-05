@@ -1,0 +1,39 @@
+@BaseHostAddress = http://localhost:5209
+
+### Register a new user
+POST {{BaseHostAddress}}/api/accounts/register
+User-Agent: HttpFile/1.0
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@email.com",
+  "password": "P@ssw0rd!",
+}
+
+### Login and retrieve tokens
+POST {{BaseHostAddress}}/api/accounts/login
+User-Agent: HttpFile/1.0
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "test@email.com",
+  "password": "P@ssw0rd!"
+}
+
+### Fetch a new access token
+POST {{BaseHostAddress}}/api/accounts/refresh
+User-Agent: HttpFile/1.0
+Content-Type: application/json
+Accept: application/json
+
+{
+  "refreshToken": "token"
+}
+
+### Get account info
+GET {{BaseHostAddress}}/api/accounts/manage/info
+User-Agent: HttpFile/1.0
+Accept: application/json
+Authorization: Bearer {token}

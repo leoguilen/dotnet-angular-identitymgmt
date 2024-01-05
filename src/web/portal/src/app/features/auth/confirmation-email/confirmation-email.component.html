@@ -1,0 +1,36 @@
+<div class="confirmation-email-container">
+	<p-card class="confirmation-email-card">
+		<ng-template pTemplate="content">
+			<div style="text-align: center" *ngIf="!confirmed">
+				<i class="pi pi-times-circle" style="font-size: 2rem"></i>
+				<h4>Sorry, your email could not be confirmed.</h4>
+				<p>It seems that the confirmation link is invalid or expired.</p>
+				<p>
+					Try request a new confirmation email by clicking
+					<a routerLink="/auth/confirmation-email-request" style="text-decoration: none"
+						>here</a
+					>.
+				</p>
+			</div>
+			<div style="text-align: center" *ngIf="confirmed">
+				<i class="pi pi-check-circle" style="font-size: 2rem"></i>
+				<h4>Thank you for confirming your email.</h4>
+				<p>You can now login to your account.</p>
+				<p-button
+					[style]="{
+          marginTop: '1rem',
+          marginBottom: '1rem',
+          backgroundColor: '#0F172A',
+          color: '#fff',
+          width: '80%',
+        }"
+					type="button"
+					size="small"
+					label="Go to Login"
+					[text]="true"
+					routerLink="/auth/login">
+				</p-button>
+			</div>
+		</ng-template>
+	</p-card>
+</div>

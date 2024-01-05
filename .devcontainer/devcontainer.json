@@ -1,0 +1,75 @@
+{
+    "name": "Development Environment",
+    "image": "mcr.microsoft.com/devcontainers/base:jammy",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/devcontainers/features/dotnet:2": {},
+        "ghcr.io/devcontainers/features/node": {
+            "version": "lts",
+            "nvmVersion": "latest"
+        }
+    },
+    "portsAttributes": {
+        "4200": {
+            "label": "Angular Application (Development)",
+            "protocol": "http"
+        },
+        "3000": {
+            "label": "Angular Application (Docker)",
+            "protocol": "http"
+        },
+        "5209": {
+            "label": "Dotnet application (Development)",
+            "protocol": "http"
+        },
+        "3001": {
+            "label": "Dotnet application (Docker)",
+            "protocol": "http"
+        },
+        "1433": {
+            "label": "SQL Server"
+        },
+        "1080": {
+            "label": "MailDev Web",
+            "protocol": "http"
+        }
+    },
+    "forwardPorts": [
+        4200,
+        1433,
+        1080,
+        5209,
+        3000,
+        3001
+    ],
+    "postCreateCommand": "npm install -g @angular/cli",
+    "postAttachCommand": "sudo apt update -y && sudo apt upgrade -y",
+    "customizations": {
+        "codespaces": {
+            "openFiles": [
+                "README.md"
+            ]
+        },
+        "vscode": {
+            "settings": {
+                "editor.formatOnSave": true,
+                "editor.formatOnSaveMode": "file",
+                "editor.codeActionsOnSave": {
+                    "source.fixAll": true,
+                    "source.organizeImports": "always"
+                }
+            },
+            "extensions": [
+                "GitHub.copilot",
+                "ms-azuretools.vscode-docker",
+                "vscode-icons-team.vscode-icons",
+                "ms-dotnettools.csdevkit",
+                "EditorConfig.EditorConfig",
+                "humao.rest-client",
+                "Angular.ng-template",
+                "cyrilletuzi.angular-schematics",
+                "johnpapa.angular-essentials"
+            ]
+        }
+    }
+}

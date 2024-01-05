@@ -1,0 +1,30 @@
+# Ignore node_modules folder
+node_modules/
+
+# Ignore build artifacts
+dist/
+
+# Ignore development files
+*.ts
+*.map
+
+# Ignore configuration files
+*.config.js
+*.json
+!angular*.json
+!package*.json
+!tsconfig*.json
+
+# Ignore test files
+*.spec.ts
+
+# Ignore editor-specific files
+.angular/
+.vscode/
+.idea/
+*.suo
+*.user
+*.sln.docstates
+Dockerfile*
+.gitignore
+*.zip

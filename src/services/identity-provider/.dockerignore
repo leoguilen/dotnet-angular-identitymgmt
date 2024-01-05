@@ -1,0 +1,7 @@
+.config/
+.vscode/
+.editorconfig
+.gitignore
+Dockerfile*
+**/[b|B]in/
+**/[o|O]bj/

@@ -1,0 +1,14 @@
+:host {
+  .confirmation-email-request-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+    .confirmation-email-request-card {
+      width: 440px;
+      padding: 2rem;
+    }
+  }
+}

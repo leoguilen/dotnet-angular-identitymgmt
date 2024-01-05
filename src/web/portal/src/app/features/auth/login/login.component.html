@@ -1,0 +1,61 @@
+<div class="login-container">
+	<p-messages [escape]="false"></p-messages>
+	<p-card class="login-card">
+		<ng-template pTemplate="content">
+			<div style="text-align: center">
+				<i class="pi pi-user"></i>
+				<h4>Login to Your Account</h4>
+			</div>
+			<div style="text-align: center">
+				<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+					<input
+						style="height: 2.5rem; width: 100%"
+						placeholder="Email"
+						type="email"
+						pInputText
+						formControlName="email" />
+					<p-password
+						[style]="{ marginTop: '1rem', height: '2.5rem', width: '100%' }"
+						[inputStyle]="{ width: '100%' }"
+						placeholder="Password"
+						formControlName="password"
+						[toggleMask]="true"
+						[feedback]="false">
+					</p-password>
+					<p-button
+						[style]="{
+							marginTop: '1.5rem',
+							marginBottom: '1rem',
+							backgroundColor: '#0F172A',
+							color: '#fff',
+							width: '100%',
+						}"
+						type="submit"
+						size="small"
+						label="Sign In"
+						iconPos="right"
+						[text]="true"
+						[loading]="processingLoginRequest"
+						[disabled]="!loginForm.valid">
+						<ng-template pTemplate="icon">
+							<i class="pi pi-arrow-right"></i>
+						</ng-template>
+					</p-button>
+				</form>
+				<a
+					routerLink="/auth/password-reset-request"
+					style="text-decoration: none; font-size: small"
+					>Forgot Password?</a
+				>
+			</div>
+		</ng-template>
+		<ng-template pTemplate="footer">
+			<div style="text-align: center">
+				<p style="font-size: small">
+					Don't have an account?
+					<a routerLink="/auth/register" style="text-decoration: none">Sign up</a>
+				</p>
+			</div>
+		</ng-template>
+	</p-card>
+</div>

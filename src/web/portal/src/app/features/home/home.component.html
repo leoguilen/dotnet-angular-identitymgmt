@@ -1,0 +1,65 @@
+<div class="home-container">
+	<div class="home-container__menubar">
+		<p-menubar
+			[model]="[
+        {
+          label: 'Source Code',
+          icon: 'pi pi-github',
+          url: 'https://github.com/leoguilen/dotnet-angular-identitymgmt',
+          style: {'margin-left': '1rem'},
+        }
+      ]">
+			<ng-template pTemplate="start">
+				<img src="favicon.ico" alt="angular logo" height="30" />
+			</ng-template>
+			<ng-template pTemplate="end">
+				<p-overlayPanel #op [style]="{ width: '250px' }">
+					<ng-template pTemplate="content">
+						<div
+							style="
+								display: flex;
+								flex-direction: column;
+								align-items: center;
+								justify-content: center;
+							">
+							<p-avatar
+								[label]="loggedUser?.initials"
+								styleClass="mr-2"
+								size="large"
+								shape="circle"></p-avatar>
+							<h4 style="margin: 10px auto auto">{{ loggedUser?.userName }}</h4>
+							<p style="color: gray; margin: 0 auto auto">{{ loggedUser?.email }}</p>
+						</div>
+						<p-divider></p-divider>
+						<div
+							style="
+								display: flex;
+								flex-direction: row;
+								align-items: center;
+								justify-content: center;
+								gap: 1rem;
+								max-height: 10px;
+								cursor: pointer;
+							"
+							(click)="onLogout()">
+							<i class="pi pi-sign-out"></i>
+							<h4>Logout</h4>
+						</div>
+					</ng-template>
+				</p-overlayPanel>
+				<div class="home-container__menubar__profile" (click)="op.toggle($event)">
+					<p-avatar
+						[label]="loggedUser?.initials"
+						styleClass="mr-2"
+						size="large"
+						shape="circle"></p-avatar>
+					<i class="pi pi-angle-down"></i>
+				</div>
+			</ng-template>
+		</p-menubar>
+	</div>
+	<div class="home-container-section">
+		<i class="pi pi-home" style="font-size: 2rem"></i>
+		<h1 class="home-container-section__title">Welcome {{ loggedUser?.email }} to Portal!</h1>
+	</div>
+</div>

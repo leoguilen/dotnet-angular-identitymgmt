@@ -1,0 +1,119 @@
+version: '3'
+
+services:
+  sqlserver:
+    build:
+      context: ./sqlserver
+      dockerfile: Dockerfile
+      no_cache: true
+    container_name: sqlserver
+    hostname: sqlserver
+    restart: always
+    environment:
+      - TZ=America/Sao_Paulo
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
+      - MSSQL_SA_PASSWORD=Password123
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssqldata:/var/opt/mssql
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Password123 -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - backend
+    profiles:
+      - infra
+      - local
+
+  maildev:
+    image: maildev/maildev
+    container_name: maildev
+    hostname: maildev
+    restart: always
+    environment:
+      - TZ=America/Sao_Paulo
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    healthcheck:
+      test: wget http://localhost:1080 --spider || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - backend
+    profiles:
+      - infra
+      - local
+
+  portal-web:
+    build:
+      context: ../../src/web/portal
+      dockerfile: Dockerfile
+      args:
+        - NODE_VERSION=20
+    container_name: portal-web
+    hostname: portal-web
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      identity-api:
+        condition: service_healthy
+    healthcheck:
+      test: wget http://localhost:80 --spider || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - frontend
+      - backend
+    profiles:
+      - local
+
+  identity-api:
+    build:
+      context: ../../src/services/identity-provider
+      dockerfile: Dockerfile
+      args:
+        - DOTNET_VERSION=8.0
+      platforms:
+        - linux/amd64
+    container_name: identity-api
+    hostname: identity-api
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Logging__LogLevel__Default=Information
+      - ConnectionStrings__Default=Server=sqlserver;Database=IdentityDB;User Id=sa;Password=Password123;TrustServerCertificate=True
+      - CorsPolicy__Origins__0=http://localhost:3000
+      - FeatureManagement__EmailNotificationFeature=true
+      - Smtp__Host=maildev
+      - Smtp__Port=1025
+    ports:
+      - "3001:8080"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      maildev:
+        condition: service_healthy
+    healthcheck:
+      test: wget http://localhost:8080/health --spider || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - backend
+    profiles:
+      - local
+
+networks:
+  backend:
+  frontend:
+
+volumes:
+  mssqldata:
