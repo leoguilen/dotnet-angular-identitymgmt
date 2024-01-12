@@ -21,7 +21,7 @@ This project is a simple example of how to manage users accounts using C#/.NET a
 
 - C#/.NET 8.0
 - Angular 17 (TypeScript)
-- PrimeNG 12
+- PrimeNG 17
 - EF Core 8.0
 - SQL Server
 - Docker
