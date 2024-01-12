@@ -69,7 +69,6 @@ chmod +x deploy-local-environment.sh && \
 5. To stop the environment, run the following command:
 
 ```bash
-cd scripts && \
 ./deploy-local-environment.sh destroy local
 ```
 
